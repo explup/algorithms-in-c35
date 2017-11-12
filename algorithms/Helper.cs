@@ -4,7 +4,7 @@ using System.Text;
 
 namespace algorithms
 {
-    static class Helper
+    public static class Helper
     {
         public static void Swap(int[] array, int i, int j)
         {

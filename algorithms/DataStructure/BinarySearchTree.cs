@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Linq;
 namespace algorithms.DataStructure
 {
     public class BinarySearchTree
@@ -11,7 +11,7 @@ namespace algorithms.DataStructure
         public void Insert(int value)
         {
             var node = new TreeNode(value);
-            if(Root == null)
+            if (Root == null)
             {
                 Root = node;
             }
@@ -61,7 +61,7 @@ namespace algorithms.DataStructure
 
         private bool Search(TreeNode seed, int value)
         {
-            if(seed == null)
+            if (seed == null)
             {
                 return false;
             }
@@ -104,12 +104,12 @@ namespace algorithms.DataStructure
             {
                 return false;
             }
-            if(parent.LeftNode.Value == value)
+            if (parent.LeftNode.Value == value)
             {
                 RemoveNode(parent.LeftNode, parent);
                 return true;
             }
-            else if(parent.RightNode.Value == value)
+            else if (parent.RightNode.Value == value)
             {
                 RemoveNode(parent.RightNode, parent);
                 return true;
@@ -161,11 +161,11 @@ namespace algorithms.DataStructure
 
         public int? FindMinValue(TreeNode root)
         {
-            if(root == null)
+            if (root == null)
             {
                 return null;
             }
-            if(root.LeftNode == null)
+            if (root.LeftNode == null)
             {
                 return root.Value;
             }
@@ -267,6 +267,70 @@ namespace algorithms.DataStructure
             {
                 PostorderTravel(seed.RightNode, travelledNodes);
             }
+        }
+
+        public IList<TreeNode> BreadFirstTravel(TreeNode root)
+        {
+            List<TreeNode> visitedNodeList = new List<TreeNode>();
+
+            if(root == null)
+            {
+                return visitedNodeList;
+            }
+
+            List<TreeNode> nodesInCurrentLevel = new List<TreeNode>() { root };
+            while(nodesInCurrentLevel.Count > 0)
+            {
+                List<TreeNode> nodesInNextLevel = new List<TreeNode>();
+
+                visitedNodeList.AddRange(nodesInCurrentLevel);
+
+                foreach(var node in nodesInCurrentLevel.ToList())
+                {
+                    if (node.LeftNode != null)
+                        nodesInNextLevel.Add(node.LeftNode);
+                    if (node.RightNode != null)
+                        nodesInNextLevel.Add(node.RightNode);
+
+                }
+                nodesInCurrentLevel.Clear();
+
+                nodesInCurrentLevel.AddRange(nodesInNextLevel);
+            }
+
+            return visitedNodeList;
+        }
+
+        public IList<TreeNode> BreadFirstTravelByQueue()
+        {
+            IList<TreeNode> visitedNode = new List<TreeNode>();
+            TreeNode node = Root;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            
+            while (node != null)
+            {
+                visitedNode.Add(node);
+
+                if (node.LeftNode != null)
+                {
+                    queue.Enqueue(node.LeftNode);
+                }
+
+                if (node.RightNode != null)
+                {
+                    queue.Enqueue(node.RightNode);
+                }
+                if (queue.Count!=0)
+                {
+                    node = queue.Dequeue();
+                }
+                else
+                {
+                    node = null;
+                }
+            }
+
+            return visitedNode;
         }
     }
 

@@ -265,5 +265,48 @@ namespace algorithms.tests
             Assert.AreEqual(9, result[4].Value);
 
         }
+
+        [TestMethod]
+        [TestCategory("BinarySearchTree")]
+        public void BreadFirstTravel_Test()
+        {
+            BinarySearchTree tree = new BinarySearchTree();
+            tree.Insert(5);
+            tree.Insert(3);
+            tree.Insert(9);
+            tree.Insert(1);
+            tree.Insert(4);
+
+            var result = tree.BreadFirstTravel(tree.Root).ToList();
+            Assert.AreEqual(5, result.Count);
+
+            Assert.AreEqual(5, result[0].Value);
+            Assert.AreEqual(3, result[1].Value);
+            Assert.AreEqual(9, result[2].Value);
+            Assert.AreEqual(1, result[3].Value);
+            Assert.AreEqual(4, result[4].Value);
+
+        }
+        [TestMethod]
+        [TestCategory("BinarySearchTree")]
+        public void BreadFirstTravelByQueue_Test()
+        {
+            BinarySearchTree tree = new BinarySearchTree();
+            tree.Insert(5);
+            tree.Insert(3);
+            tree.Insert(9);
+            tree.Insert(1);
+            tree.Insert(4);
+
+            var result = tree.BreadFirstTravelByQueue().ToList();
+            Assert.AreEqual(5, result.Count);
+
+            Assert.AreEqual(5, result[0].Value);
+            Assert.AreEqual(3, result[1].Value);
+            Assert.AreEqual(9, result[2].Value);
+            Assert.AreEqual(1, result[3].Value);
+            Assert.AreEqual(4, result[4].Value);
+
+        }
     }
 }
